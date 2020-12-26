@@ -3,47 +3,48 @@ const quoteText = document.getElementById('quote');
 const authorText = document.getElementById('author');
 const twitterBtn = document.getElementById('twitter');
 const newQuoteBtn = document.getElementById('new-quote');
-const loader = document.getElementbyId('loader');
+//const loader = document.getElementbyId('loader');
 
-// Show Loading
-function loading() {
-    loader.hidden = false;
-    quoteContainer.hidden = true;
-}
+// // Show Loading
+// function loading() {
+//     loader.hidden = false;
+//     quoteContainer.hidden = true;
+// }
 
-// Hide Loading
-function complete() {
-    if (!loader.hidden) {
-        quoteContainer.hidden = false;
-        loader.hidden = true;
-    }
-}
+// // Hide Loading
+// function complete() {
+//     if (!loader.hidden) {
+//         quoteContainer.hidden = false;
+//         loader.hidden = true;
+//     }
+// }
 
 // Get Quote from API
 async function getQuote() {
-    loading();
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    //loading();
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
     const apiUrl = 'http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json';
     try {
         const response = await fetch(proxyUrl + apiUrl);
         const data = await response.json();
+        authorText.innerText = data.quoteAuthor;
+        
+        // // // If Author is blank, add 'Unknown'
+        // if (data.quoteAuthor === '') {
+        //     authorText.innerText = 'Unknown';
+        // } else {
+        //     authorText.innerText = data.quoteAuthor;
+        // }
 
-        // If Author is blank, add 'Unknown'
-        if (data.quoteAuthor === '') {
-            authorText.innerText = 'Unknown';
-        } else {
-            authorText.innerText = data.quoteAuthor;
-        }
-
-        // Reduce font size for long quotes
-        if (data.quoteText.length > 120) {
-            quoteText.classList.add('long-quote');
-        } else {
-            quoteText.classList.remove('long-quote');
-        }
+        // // Reduce font size for long quotes
+        // if (data.quoteText.length > 120) {
+        //     quoteText.classList.add('long-quote');
+        // } else {
+        //     quoteText.classList.remove('long-quote');
+        // }
         quoteText.innerText = data.quoteText;
         // Stop Loader, Show Quote
-        complete();
+        //complete();
     } catch (error) {
         getQuote();
     }
